@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PokemonReviewApp.Dto;
 using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
-using PokemonReviewApp.Repository;
 
 namespace PokemonReviewApp.Controllers
 {
@@ -47,7 +46,7 @@ namespace PokemonReviewApp.Controllers
 
             return Ok(owner);
         }
-        [HttpGet("{ownerId}")]
+        [HttpGet("{ownerId}/pokemon")]
         [ProducesResponseType(200, Type = typeof(Owner))]
         [ProducesResponseType(400)]
         public IActionResult GetPokenmonByOwner(int ownerId)

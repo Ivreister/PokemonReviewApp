@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PokemonReviewApp.Dto;
 using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
-using PokemonReviewApp.Repository;
 
 namespace PokemonReviewApp.Controllers
 {
@@ -40,7 +39,7 @@ namespace PokemonReviewApp.Controllers
             if (!_reviewerRepository.ReviewerExists(reviewerId))
                 return NotFound();
 
-            var reviewer = _mapper.Map<PokemonDto>(_reviewerRepository.GetReviewer(reviewerId));
+            var reviewer = _mapper.Map<ReviewerDto>(_reviewerRepository.GetReviewer(reviewerId));
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
