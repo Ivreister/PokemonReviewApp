@@ -123,7 +123,7 @@ namespace PokemonReviewApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (!_countryRepository.CountryExists(ownerId))
+            if (!_ownerRepository.OwnerExists(ownerId))
             {
                 return NotFound();
             }
