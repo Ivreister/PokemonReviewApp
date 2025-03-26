@@ -130,7 +130,7 @@ namespace PokemonReviewApp.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return Ok("Successfuly created");
+            return Ok("Successfuly deleted");
         }
     }
 }
