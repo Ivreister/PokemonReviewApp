@@ -149,9 +149,9 @@ namespace PokemonReviewApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (!_reviewerRepository.ReviewerExists(reviewerId))
+            if (!_reviewerRepository.DeleteReviewer(reviewerToDelete))
             {
-                ModelState.AddModelError("", "Somthing went wrong deleting reviewer");
+                ModelState.AddModelError("", "Somthing went wrong deleting review");
             }
 
             return Ok("Successfuly deleted");
