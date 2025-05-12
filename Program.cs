@@ -7,6 +7,8 @@ using PokemonReviewApp.Repository;
 using System.Text.Json.Serialization;
 
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -29,6 +31,14 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowAll", builder => {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 
 var app = builder.Build();
 
@@ -55,8 +65,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseSwagger();
+app.UseSwaggerUI(c => {
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pokemon API v1");
+});
+
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.Run();
+app.UseCors("AllowAll");
+app.MapGet("/", () => "Pokemon API is working!");
+app.MapGet("/test", () => "Test endpoint");
+app.Run("http://*:8080");
