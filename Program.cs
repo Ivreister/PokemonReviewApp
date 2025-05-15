@@ -76,7 +76,19 @@ app.MapControllers();
 app.UseCors("AllowAll");
 app.MapGet("/", () => "Pokemon API is working!");
 app.MapGet("/test", () => "Test endpoint");
-app.MapGet("/health", () => Results.Ok());
+app.MapGet("/health", () => "Healthy");
+app.MapGet("/db-debug", (DataContext context) =>
+{
+    try
+    {
+        var canConnect = context.Database.CanConnect();
+        return $"DB Connection: {canConnect}";
+    }
+    catch (Exception ex)
+    {
+        return $"DB Error: {ex.Message}";
+    }
+});
 app.MapGet("/test-db", async (DataContext context) =>
 {
     return await context.Pokemon.AnyAsync()
