@@ -95,6 +95,11 @@ app.MapGet("/test-db", async (DataContext context) =>
         ? "DB connection OK"
         : "DB connected but empty";
 });
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<DataContext>();
+    db.Database.Migrate();
+}
 app.Run("http://*:8080");
 
 
