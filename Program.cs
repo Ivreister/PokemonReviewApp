@@ -12,6 +12,14 @@ using System.Collections;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new Exception("Connection string is missing!");
+
+Console.WriteLine($"Using DB: {connectionString}"); // Для логов
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseNpgsql(connectionString));
+
 // Add services to the container.
 
 builder.Services.AddControllers();
