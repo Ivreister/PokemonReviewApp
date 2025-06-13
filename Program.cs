@@ -12,7 +12,7 @@ using System.Collections;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"]
+var connectionString = builder.Configuration["ConnectionStrings__DefaultConnection"]
     ?? throw new Exception("Connection string is missing!");
 
 Console.WriteLine($"Using DB: {connectionString}");
