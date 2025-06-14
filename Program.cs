@@ -80,11 +80,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseSwagger(); 
 app.UseSwaggerUI(c => {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pokemon API v1");
+    c.ConfigObject.AdditionalItems["servers"] = new[] {
+        new { url = "http://localhost:8080" },
+        new { url = "https://pokemonreviewapp-aiv9.onrender.com" }
+    };
 });
-
 app.UseAuthorization();
 
 app.MapControllers();
@@ -115,6 +117,6 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<DataContext>();
     db.Database.Migrate();
 }
-app.Run("http://*:8080");
+app.Run("http://*:" + Environment.GetEnvironmentVariable("PORT") ?? "8080");
 
 

@@ -14,5 +14,6 @@ COPY --from=build /app .
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://*:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_HTTPS_PORT=443
 
 ENTRYPOINT ["dotnet", "PokemonReviewApp.dll"]
