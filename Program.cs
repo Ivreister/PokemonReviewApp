@@ -79,7 +79,6 @@ app.UseSwaggerUI(c => {
 
 
 //app.UseHttpsRedirection();
-app.UseExceptionHandler("/error");
 app.MapGet("/error", () => "Произошла ошибка. Проверьте логи сервера.");
 
 app.UseAuthorization();
