@@ -74,8 +74,8 @@ app.UseSwaggerUI(c => {
 });
 
 //app.UseHttpsRedirection();
-
 app.UseAuthorization();
+app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
