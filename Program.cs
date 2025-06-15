@@ -72,22 +72,17 @@ void SeedData(IHost app)
 }
 
 // Configure the HTTP request pipeline.
-app.UseSwagger();
 app.UseSwaggerUI(c => {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pokemon API v1");
+    c.ConfigObject.AdditionalItems["servers"] = new[] {
+        new { url = "/" }
+    };
 });
-
 
 //app.UseHttpsRedirection();
 app.UseExceptionHandler("/error");
 app.MapGet("/error", () => "Произошла ошибка. Проверьте логи сервера.");
 
-app.UseSwaggerUI(c => {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pokemon API v1");
-    c.ConfigObject.AdditionalItems["servers"] = new[] {
-        new { url = "/" } 
-    };
-});
 app.UseAuthorization();
 
 app.MapControllers();
