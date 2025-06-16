@@ -70,9 +70,6 @@ app.UseSwaggerUI(c => {
 });
 
 //app.UseHttpsRedirection();
-app.UseExceptionHandler("/error");
-app.MapGet("/error", () => "Ïðîèçîøëà îøèáêà. Ïðîâåðüòå ëîãè ñåðâåðà.");
-
 app.UseAuthorization();
 app.MapControllers();
 app.UseCors("AllowAll");
