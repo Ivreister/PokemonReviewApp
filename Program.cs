@@ -14,8 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"]
     ?? throw new Exception("Connection string is missing!");
 
-Console.WriteLine($"Using DB: {connectionString}");
-
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(connectionString, npgsqlOptions =>
         npgsqlOptions.EnableRetryOnFailure()
@@ -79,18 +77,6 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseCors("AllowAll");
 
-app.MapGet("/db-debug", (DataContext context) =>
-{
-    try
-    {
-        var canConnect = context.Database.CanConnect();
-        return $"DB Connection: {canConnect}";
-    }
-    catch (Exception ex)
-    {
-        return $"DB Error: {ex.Message}";
-    }
-});
 app.MapGet("/test-db", async (DataContext context) =>
 {
     return await context.Pokemon.AnyAsync()
