@@ -51,6 +51,20 @@ foreach (var envVar in Environment.GetEnvironmentVariables().Cast<DictionaryEntr
 
 var app = builder.Build();
 
+if (args.Length == 1 && args[0].ToLower() == "seeddata")
+    SeedData(app);
+
+void SeedData(IHost app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<Seed>();
+        service.SeedDataContext();
+    }
+}
+
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI(c => {
@@ -62,12 +76,9 @@ app.UseExceptionHandler("/error");
 app.MapGet("/error", () => "Ïðîèçîøëà îøèáêà. Ïðîâåðüòå ëîãè ñåðâåðà.");
 
 app.UseAuthorization();
-
 app.MapControllers();
 app.UseCors("AllowAll");
-app.MapGet("/", () => "Pokemon API is working!");
-app.MapGet("/test", () => "Test endpoint");
-app.MapGet("/health", () => "Healthy");
+
 app.MapGet("/db-debug", (DataContext context) =>
 {
     try
