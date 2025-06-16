@@ -51,31 +51,15 @@ foreach (var envVar in Environment.GetEnvironmentVariables().Cast<DictionaryEntr
 
 var app = builder.Build();
 
-if (args.Length == 1 && args[0].ToLower() == "seeddata")
-    SeedData(app);
-
-void SeedData(IHost app)
-{
-    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-    using (var scope = scopedFactory.CreateScope())
-    {
-        var service = scope.ServiceProvider.GetService<Seed>();
-        service.SeedDataContext();
-    }
-}
-
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI(c => {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pokemon API v1");
 });
 
-
 //app.UseHttpsRedirection();
 app.UseExceptionHandler("/error");
 app.MapGet("/error", () => "Ïðîèçîøëà îøèáêà. Ïðîâåðüòå ëîãè ñåðâåðà.");
-
 
 app.UseAuthorization();
 
