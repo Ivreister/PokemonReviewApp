@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using PokemonReviewApp.Data;
 using PokemonReviewApp;
 using PokemonReviewApp.Interfaces;
@@ -26,8 +25,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
-builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -46,14 +44,10 @@ builder.Services.AddCors(options => {
     });
 });
 
-Console.WriteLine("=== ENV VARIABLES ===");
 foreach (var envVar in Environment.GetEnvironmentVariables().Cast<DictionaryEntry>())
 {
     Console.WriteLine($"{envVar.Key}: {envVar.Value}");
 }
-Console.WriteLine("====================");
-Console.WriteLine("CONNECTION STRING: " +
-    builder.Configuration.GetConnectionString("DefaultConnection"));
 
 var app = builder.Build();
 
