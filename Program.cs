@@ -77,12 +77,6 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseCors("AllowAll");
 
-app.MapGet("/test-db", async (DataContext context) =>
-{
-    return await context.Pokemon.AnyAsync()
-        ? "DB connection OK"
-        : "DB connected but empty";
-});
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<DataContext>();
